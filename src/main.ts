@@ -58,4 +58,30 @@ connectButton.onclick = async () => {
 
     candidatesDiv.appendChild(wrapper);
   }
+
+  const winnerDiv = document.createElement("div");
+winnerDiv.style.marginTop = "2rem";
+candidatesDiv.appendChild(winnerDiv);
+
+const calculateWinner = async () => {
+  const candidates = await contract.getCandidates();
+  let winner = "";
+  let maxVotes = -1;
+
+  for (const name of candidates) {
+    const votes = await contract.getVotes(name);
+    const voteCount = Number(votes.toString());
+
+    if (voteCount > maxVotes) {
+      maxVotes = voteCount;
+      winner = name;
+    }
+  }
+
+  winnerDiv.innerHTML = `🏆 <strong>Current Winner:</strong> ${winner} (${maxVotes} votes)`;
+};
+
+// Sayfa yüklenince ve her oy sonrası çağır:
+await calculateWinner();
+
 };
