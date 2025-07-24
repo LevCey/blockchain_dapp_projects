@@ -13,11 +13,19 @@ document.body.appendChild(candidatesDiv);
 
 let contract: ethers.Contract;
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 connectButton.onclick = async () => {
   if (!window.ethereum) {
-    alert("MetaMask yüklü değil!");
+    alert("MetaMask is not installed!");
     return;
   }
+
+  console.log("Connect Wallet tıklandı");
 
   const provider = new ethers.BrowserProvider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
@@ -30,6 +38,9 @@ connectButton.onclick = async () => {
 
   for (const name of candidates) {
     const wrapper = document.createElement("div");
+    wrapper.className = "candidate";
+
+
 
     const nameEl = document.createElement("strong");
     nameEl.innerText = `🧑 ${name}`;
@@ -49,7 +60,7 @@ connectButton.onclick = async () => {
         const updatedVotes = await contract.getVotes(name);
         voteCountEl.innerText = ` — ${updatedVotes.toString()} votes ✅`;
       } catch (err: any) {
-        alert("Oy verme başarısız: " + (err?.reason || err?.message));
+        alert("Voting failed: " + (err?.reason || err?.message));
       }
     };
 
@@ -62,6 +73,7 @@ connectButton.onclick = async () => {
   const winnerDiv = document.createElement("div");
 winnerDiv.style.marginTop = "2rem";
 candidatesDiv.appendChild(winnerDiv);
+winnerDiv.id = "winner";
 
 const calculateWinner = async () => {
   const candidates = await contract.getCandidates();
