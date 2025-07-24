@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "dotenv": "^17.2.0",
     "hardhat": "^2.26.1",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
