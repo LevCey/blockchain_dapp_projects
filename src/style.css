@@ -1,8 +1,14 @@
 body {
   font-family: sans-serif;
   padding: 2rem;
+  max-width: 600px;
+  margin: auto;
 }
 button {
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
+  margin-left: 1rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+strong {
+  font-size: 1.1rem;
 }
